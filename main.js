@@ -1,4 +1,13 @@
-// My Tasks Basic
+
+
+
+
+
+0
+0
+0
+0
+0// My Tasks Basic
 
 // HTML Elements
 let goBtnEl = document.getElementById('go-btn');
