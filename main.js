@@ -1,20 +1,16 @@
-
-
-
-
-
-0
-0
-0
-0
-0// My Tasks Basic
+// My Tasks Basic
 
 // HTML Elements
 let goBtnEl = document.getElementById('go-btn');
 let menuEl = document.getElementById('menu');
 let tasksEl = document.getElementById('tasks');
 
-// Go Btn - Menu Listener
+
+//Global Variables
+let task = loadTasks();
+displayAll();
+
+// Go Btn - Menu Li stener
 goBtnEl.addEventListener('click', goBtnHandler);
 
 function goBtnHandler() {
@@ -34,7 +30,9 @@ function goBtnHandler() {
 
 // MENU FUNCTIONS
 function addTask() {
-  console.log('Add Task');
+  let description = prompt("Enter task description");
+  task.push(newTask(description));
+  displayAll()
 }
 
 function toggleTask() {
@@ -47,4 +45,46 @@ function removeTask() {
 
 function clearAll() {
   console.log('Clear All');
+}
+
+
+
+// HELPER FUNCTION
+// return a new task with completion property
+function newTask(taskDescription){
+  return {
+    description: taskDescription, 
+    completed: ``
+  };
+}
+
+// display all tasks
+function displayAll() {
+  let outputStr = '';
+  for (let i = 0; i < task.length; i++){
+    outputStr += getTaskHTMLStr(task[i], i);
+  }
+  tasksEl.innerHTML = outputStr;
+}
+
+// get html for givin task
+function getTaskHTMLStr(task, i) {
+  return `
+    <div>
+      ${i}: ${task.description}
+    </div>
+  `
+}
+
+// save global tasks to local storage
+function saveTasks() {
+  localStorage.setItem('tasks', JSON.stringify(task))
+}
+
+
+// load tasks from local storage
+
+function loadTasks() {
+  let taskStr = localStorage.getItem('tasks');
+  return JSON.parse(taskStr);
 }
