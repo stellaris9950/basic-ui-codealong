@@ -32,15 +32,33 @@ function goBtnHandler() {
 function addTask() {
   let description = prompt("Enter task description");
   task.push(newTask(description));
-  displayAll()
+  saveTasks();
+  displayAll();
 }
 
 function toggleTask() {
-  console.log('Toggle Task');
+  let index = +prompt('Enter # of task:');
+  let taskIndex = task[index];
+  if (taskIndex.completed === '') {
+    taskIndex.completed = 'completed';
+  }
+  else {
+    taskIndex.completed = '';
+  }
+  saveTasks()
+  displayAll()
 }
 
 function removeTask() {
-  console.log('Remove Task');
+  let index = +prompt('Enter # of task:');
+  if (index >= 0 && index < task.length) {
+    task.splice(index, 1)
+    saveTasks();
+    displayAll();
+  }
+  else {
+    alert('invalid task #')
+  }
 }
 
 function clearAll() {
@@ -70,7 +88,7 @@ function displayAll() {
 // get html for givin task
 function getTaskHTMLStr(task, i) {
   return `
-    <div>
+    <div class="${task.completed}">
       ${i}: ${task.description}
     </div>
   `
@@ -86,5 +104,5 @@ function saveTasks() {
 
 function loadTasks() {
   let taskStr = localStorage.getItem('tasks');
-  return JSON.parse(taskStr);
+  return JSON.parse(taskStr) ?? [];
 }
