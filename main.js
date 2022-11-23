@@ -62,7 +62,9 @@ function removeTask() {
 }
 
 function clearAll() {
-  console.log('Clear All');
+  task = [];
+  saveTasks();
+  displayAll();
 }
 
 
